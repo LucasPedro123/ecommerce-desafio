@@ -1,0 +1,105 @@
+.main-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 100px;
+    flex-wrap: wrap;
+    gap: 22px;
+
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 217px;
+    height: 285px;
+
+}
+
+.card-description, .card-text {
+    margin-inline: 10px;
+}
+
+.card-description{
+    margin-block-end: 12px;
+}
+
+
+.card-description {
+    font-size: 10px;
+    line-height: 12px;
+    color: #2C2C2C;
+    
+}
+
+.cart-image {
+    width: 111px;
+    padding-block-start: 18px;
+    padding-block-end: 14px;
+}
+
+
+.card-text {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.card-name {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 19px;
+    line-height: 30px;
+    color: #2C2C2C;
+    cursor: pointer;
+}
+
+.card-price {
+    /* Estilização para o card do price */
+    background: #373737;
+    border-radius: 5px;
+    padding: 7px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+
+    /* Estilização para o texto */
+    font-family: 'Montserrat';
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 15px;
+
+    color: #FFFFFF;
+
+
+}
+
+.main-card {
+    width: 217px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.135216);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+
+.card-btn {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 14px;
+    border: none;
+    background: #0F52BA;
+    border-radius: 0px 0px 8px 8px;
+    padding-block: 10px;
+    color: white;
+    cursor: pointer;
+
+    position: relative;
+    bottom: 0;
+}
