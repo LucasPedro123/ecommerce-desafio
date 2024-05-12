@@ -1,10 +1,11 @@
 .main-container {
     display: flex;
     justify-content: center;
-    margin: 20px 100px;
+    margin-inline: 100px;
+    margin-block: 30px;
     flex-wrap: wrap;
     gap: 22px;
-
+    height: 100vh;
 }
 
 .card-content {
@@ -49,7 +50,6 @@
 .card-name {
     font-weight: 400;
     font-size: 20px;
-    line-height: 19px;
     line-height: 30px;
     color: #2C2C2C;
     cursor: pointer;
@@ -99,7 +99,14 @@
     padding-block: 10px;
     color: white;
     cursor: pointer;
-
+    z-index: 0;
     position: relative;
     bottom: 0;
+
+    transition: 0.3s;
+}
+
+.card-btn:is(:hover, :focus){
+    background: #0a3980;
+
 }
