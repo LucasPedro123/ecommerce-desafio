@@ -1,7 +1,6 @@
 import * as S from './Header.style'; // Importando os estilos com o alias 'S'
 import { useCartContext } from '../Context/CartContext'; // Importando o contexto do carrinho
 import { useEffect, useState } from 'react';
-import { emit } from 'process';
 
 interface Product {
     id: number;
@@ -12,7 +11,7 @@ interface Product {
 }
 
 const Header = () => {
-    const { cartItems, removeFromCart, addToCart } = useCartContext();
+    const { cartItems, removeFromCart } = useCartContext();
     const [active, setActive] = useState(false);
     const [totalPrice, setTotalPrice] = useState(0);
 
