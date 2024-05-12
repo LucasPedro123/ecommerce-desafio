@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 import './Hero.style.css'; // Importando os estilos com o alias 'S'
-
+import { useCartContext } from '../Context/CartContext'; // Importando o contexto do carrinho
 
 interface Product {
     id: number;
@@ -8,10 +8,11 @@ interface Product {
     price: string;
     description: string;
     photo: string;
-    // Adicione outras propriedades conforme necessário
 }
 
 const Hero = () => {
+    const { addToCart } = useCartContext(); // Obtendo a função addToCart do contexto
+
     const fetchProducts = async () => {
         const response = await fetch('https://mks-frontend-challenge-04811e8151e6.herokuapp.com/api/v1/products?page=1&rows=10&sortBy=id&orderBy=ASC');
         if (!response.ok) {
@@ -27,7 +28,7 @@ const Hero = () => {
 
     return (
         <main className='main-container'>
-            {data.products.map((product: Product) => ( // Aqui definimos o tipo explícito para 'product'
+            {data.products.map((product: Product) => (
                 <div className='main-card' key={product.id}>
                     <div>
                         <div className='card-content'>
@@ -38,14 +39,11 @@ const Hero = () => {
                                 </div>
                         </div>
                         <p className='card-description'>{product.description}</p>
-
                     </div>
-
-                    <button className='card-btn'>
+                    <button className='card-btn' onClick={() => addToCart(product)}>
                         <i className="fa-solid fa-bag-shopping"></i>
                         <span>Comprar</span>
                     </button>
-                    {/* Renderizar outros detalhes do produto conforme necessário */}
                 </div>
             ))}
         </main>
