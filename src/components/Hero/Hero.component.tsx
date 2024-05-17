@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query';
-import './Hero.style.css'; // Importando os estilos com o alias 'S'
-import { useCartContext } from '../Context/CartContext'; // Importando o contexto do carrinho
+import { useCartContext } from '../Context/CartContext'; 
+import * as S from './Hero.style.tsx'; 
+import { useState } from 'react';
 
 interface Product {
     id: number;
@@ -11,7 +12,9 @@ interface Product {
 }
 
 const Hero = () => {
-    const { addToCart } = useCartContext(); // Obtendo a função addToCart do contexto
+    const { addToCart, removeFromCart } = useCartContext(); 
+    const { cartItems } = useCartContext();
+    const [ isActive, setActive ]= useState(false);
 
     const fetchProducts = async () => {
         const response = await fetch('https://mks-frontend-challenge-04811e8151e6.herokuapp.com/api/v1/products?page=1&rows=10&sortBy=id&orderBy=ASC');
@@ -21,32 +24,58 @@ const Hero = () => {
         return response.json();
     };
 
+  
+
+    function handleProduct(product : any) {
+        // o valor que estiver no isActive sempre será invertido quando essa função for chamado
+        setActive((oldValue: boolean) => !oldValue)
+        
+        // Fazer tratamento: se for true, coloque no carrinho e, se falso, remove do carrinho.
+        // Isso foi feito para tratar caso o botão ser clicado novamente.
+
+        if (isActive == true) {
+            addToCart(product)
+            console.log("É true")
+        } else {
+            removeFromCart(product.id)
+            console.log("É False")
+
+        }
+    }
+
     const { data, isLoading, isError } = useQuery('products', fetchProducts);
 
     if (isLoading) return <div>Loading...</div>;
     if (isError) return <div>Error fetching products</div>;
 
     return (
-        <main className='main-container'>
+        <S.MainContainer>
             {data.products.map((product: Product) => (
-                <div className='main-card' key={product.id}>
+                <S.MainCard key={product.id}>
                     <div>
-                        <div className='card-content'>
-                                <img src={product.photo} className='cart-image' alt="" />
-                                <div className='card-text'>
-                                    <p className='card-name'>{product.name}</p>
-                                    <p className='card-price'>R${product.price}</p>
-                                </div>
-                        </div>
-                        <p className='card-description'>{product.description}</p>
+                        <S.CardContent>
+                            <S.CartImage src={product.photo} alt={product.name} />
+                            <S.CardText>
+                                <S.CardName>{product.name}</S.CardName>
+                                <S.CardPrice>R${product.price}</S.CardPrice>
+                            </S.CardText>
+                        </S.CardContent>
+                        <S.CardDescription>{product.description}</S.CardDescription>
                     </div>
-                    <button className='card-btn' onClick={() => addToCart(product)}>
-                        <i className="fa-solid fa-bag-shopping"></i>
+                    <S.CardButton onClick={() => handleProduct(product)}>
+                        {
+                            cartItems.some(itemCart => itemCart.id === product.id)
+                                // Renderizo o ícone CartCheck, se existir o elemento.
+                                ? (<i className="fa-solid fa-cart-circle-check"></i>)
+                                // Se não, renderizo o ícone CartPlus.
+                                : (<i className="fa-solid fa-cart-circle-plus"></i>)
+                        }
+                        
                         <span>Comprar</span>
-                    </button>
-                </div>
+                    </S.CardButton>
+                </S.MainCard>
             ))}
-        </main>
+        </S.MainContainer>
     );
 }
 
