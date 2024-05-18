@@ -8,13 +8,14 @@ interface Product {
     price: string;
     description: string;
     photo: string;
+    
 }
 
 const Header = () => {
     const { cartItems, removeFromCart } = useCartContext();
     const [active, setActive] = useState(false);
-    const [totalPrice, setTotalPrice] = useState(0);
-
+    const [totalPrice, setTotalPrice] = useState<number>(0);
+    
     function handleClickOpen() {
         setActive(true);
     }
@@ -22,21 +23,28 @@ const Header = () => {
     function handleClickClose() {
         setActive(false);
     }
-
+    // Neste useEffect peço para ele ficar monitorando o cartItems toda vez que a página ser atualizada
     useEffect(() => {
-        // Calcula o preço total ao carregar os itens ou sempre que o carrinho for alterado
-        const calculateTotalPrice = () => {
-            let total = 0;
-            cartItems.forEach(item => {
-                total += parseFloat(item.price); // Converte o preço para um número e adiciona ao total
-            });
-            setTotalPrice(total);
-        };
-
-        calculateTotalPrice();
+        let total: number;
+        // Nesta linha de código, uso a função reducer para cada elemento do cart
+        total = cartItems.reduce((acc, current)=> acc + parseFloat(current.price), 0)
+        
+        setTotalPrice(total);
+        console.log(totalPrice)
+        
+        
     }, [cartItems]);
-
     
+    const [isQtd, setQtd] = useState<number>(1);
+
+    function handleButtonCount(operator : string, product : Product ) {
+        if (operator == "Subtrai") {
+            isQtd > 1 ? setQtd(isQtd - 1) : removeFromCart(product.id)
+        }
+        if (operator == "Soma") {
+            isQtd < 20 ? setQtd(isQtd + 1) : ""
+        }
+    }   
 
     return (
         <S.Header>
@@ -65,9 +73,9 @@ const Header = () => {
                                         <p>Qtd: </p>
 
                                         <div>
-                                            <button>-</button>
-                                            <span>0</span>
-                                            <button>+</button>
+                                            <button onClick={()=> handleButtonCount("Subtrai", e)}>-</button>
+                                            <span>{ isQtd }</span>
+                                            <button  onClick={()=> handleButtonCount("Soma", e)}>+</button>
                                         </div>
 
                                     </S.CartQtd>
@@ -81,7 +89,7 @@ const Header = () => {
                     <S.CartBuy>
                         <S.CartBuyText>
                             <h1>Total:</h1>
-                            <h1>R${totalPrice.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h1> {/* Exibe o preço total com duas casas decimais e separador de milhares */}
+                            <h1>R${totalPrice * isQtd}</h1> 
 
                         </S.CartBuyText>
                         <S.CartBuyBtn>
