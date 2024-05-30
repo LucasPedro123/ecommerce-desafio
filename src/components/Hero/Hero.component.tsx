@@ -66,9 +66,9 @@ const Hero = () => {
                         {
                             cartItems.some(itemCart => itemCart.id === product.id)
                                 // Renderizo o ícone CartCheck, se existir o elemento.
-                                ? (<i className="fa-solid fa-cart-circle-check"></i>)
+                                ? (<i className="fa-solid fa-check"></i>)
                                 // Se não, renderizo o ícone CartPlus.
-                                : (<i className="fa-solid fa-cart-circle-plus"></i>)
+                                : (<i className="fa-solid fa-cart-plus"></i>)
                         }
                         
                         <span>Comprar</span>
