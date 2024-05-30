@@ -27,24 +27,24 @@ const Header = () => {
     useEffect(() => {
         let total: number;
         // Nesta linha de código, uso a função reducer para cada elemento do cart
-        total = cartItems.reduce((acc, current)=> acc + parseFloat(current.price), 0)
         
+        total = cartItems.reduce((acc, current) => acc + parseFloat(current.price), 0)
         setTotalPrice(total);
         console.log(totalPrice)
         
         
     }, [cartItems]);
-    
+
     const [isQtd, setQtd] = useState<number>(1);
 
-    function handleButtonCount(operator : string, product : Product ) {
+    function handleButtonCount(operator: string, product: Product) {
         if (operator == "Subtrai") {
             isQtd > 1 ? setQtd(isQtd - 1) : removeFromCart(product.id)
         }
         if (operator == "Soma") {
             isQtd < 20 ? setQtd(isQtd + 1) : ""
         }
-    }   
+    }  
 
     return (
         <S.Header>
@@ -54,7 +54,7 @@ const Header = () => {
                     <p className='header-text'>Sistemas</p>
                 </S.LogoWrapper>
                 <S.CartWrapper onClick={() => handleClickOpen()}>
-                    <i className="fa-regular fa-cart-shopping"></i>
+                    <i className="fa-solid fa-cart-shopping"></i>
                     <p className='cart-text'>{cartItems.length}</p> {/* Exibe o número de itens no carrinho */}
                 </S.CartWrapper>
 
@@ -73,9 +73,9 @@ const Header = () => {
                                         <p>Qtd: </p>
 
                                         <div>
-                                            <button onClick={()=> handleButtonCount("Subtrai", e)}>-</button>
-                                            <span>{ isQtd }</span>
-                                            <button  onClick={()=> handleButtonCount("Soma", e)}>+</button>
+                                            <button onClick={() => handleButtonCount("Subtrai", e)}>-</button>
+                                            <span>{isQtd}</span>
+                                            <button onClick={() => handleButtonCount("Soma", e)}>+</button>
                                         </div>
 
                                     </S.CartQtd>
@@ -89,7 +89,7 @@ const Header = () => {
                     <S.CartBuy>
                         <S.CartBuyText>
                             <h1>Total:</h1>
-                            <h1>R${totalPrice * isQtd}</h1> 
+                            <h1>R${totalPrice * isQtd}</h1>
 
                         </S.CartBuyText>
                         <S.CartBuyBtn>
